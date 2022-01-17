@@ -7,6 +7,7 @@ import {
   ShoppingBagIcon,
   XIcon,
 } from "@heroicons/react/outline";
+import Link from "next/link";
 
 const navigation = {
   categories: [
@@ -133,7 +134,7 @@ const navigation = {
     },
   ],
   pages: [
-    { name: "Company", href: "#" },
+    { name: "Company", href: "/company" },
     { name: "Stores", href: "#" },
   ],
 };
@@ -227,16 +228,15 @@ export default function Navbar() {
                                 className="object-center object-cover"
                               />
                             </div>
-                            <a
-                              href={item.href}
-                              className="mt-6 block font-medium text-gray-900"
-                            >
-                              <span
-                                className="absolute z-10 inset-0"
-                                aria-hidden="true"
-                              />
-                              {item.name}
-                            </a>
+                            <Link href={item.href}>
+                              <a className="mt-6 block font-medium text-gray-900">
+                                <span
+                                  className="absolute z-10 inset-0"
+                                  aria-hidden="true"
+                                />
+                                {item.name}
+                              </a>
+                            </Link>
                             <p aria-hidden="true" className="mt-1">
                               Shop now
                             </p>
@@ -258,12 +258,11 @@ export default function Navbar() {
                           >
                             {section.items.map((item) => (
                               <li key={item.name} className="flow-root">
-                                <a
-                                  href={item.href}
-                                  className="-m-2 p-2 block text-gray-500"
-                                >
-                                  {item.name}
-                                </a>
+                                <Link href={item.href}>
+                                  <a className="-m-2 p-2 block text-gray-500">
+                                    {item.name}
+                                  </a>
+                                </Link>
                               </li>
                             ))}
                           </ul>
@@ -277,32 +276,29 @@ export default function Navbar() {
               <div className="border-t border-gray-200 py-6 px-4 space-y-6">
                 {navigation.pages.map((page) => (
                   <div key={page.name} className="flow-root">
-                    <a
-                      href={page.href}
-                      className="-m-2 p-2 block font-medium text-gray-900"
-                    >
-                      {page.name}
-                    </a>
+                    <Link href={page.href}>
+                      <a className="-m-2 p-2 block font-medium text-gray-900">
+                        {page.name}
+                      </a>
+                    </Link>
                   </div>
                 ))}
               </div>
 
               <div className="border-t border-gray-200 py-6 px-4 space-y-6">
                 <div className="flow-root">
-                  <a
-                    href="#"
-                    className="-m-2 p-2 block font-medium text-gray-900"
-                  >
-                    Sign in
-                  </a>
+                  <Link href="/signin">
+                    <a className="-m-2 p-2 block font-medium text-gray-900">
+                      Sign in
+                    </a>
+                  </Link>
                 </div>
                 <div className="flow-root">
-                  <a
-                    href="#"
-                    className="-m-2 p-2 block font-medium text-gray-900"
-                  >
-                    Create account
-                  </a>
+                  <Link href="/register">
+                    <a className="-m-2 p-2 block font-medium text-gray-900">
+                      Create account
+                    </a>
+                  </Link>
                 </div>
               </div>
 
@@ -324,7 +320,7 @@ export default function Navbar() {
         </Dialog>
       </Transition.Root>
 
-      <header className="relative bg-white">
+      <header className="relative bg-white z-10">
         <p className="bg-indigo-600 h-10 flex items-center justify-center text-sm font-medium text-white px-4 sm:px-6 lg:px-8">
           Get free delivery on orders over $100
         </p>
@@ -346,14 +342,16 @@ export default function Navbar() {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <a href="#">
-                  <span className="sr-only">Workflow</span>
-                  <img
-                    className="h-8 w-auto"
-                    src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
-                    alt=""
-                  />
-                </a>
+                <Link href="/">
+                  <a>
+                    <span className="sr-only">Workflow</span>
+                    <img
+                      className="h-8 w-auto"
+                      src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
+                      alt=""
+                    />
+                  </a>
+                </Link>
               </div>
 
               {/* Flyout menus */}
@@ -408,16 +406,15 @@ export default function Navbar() {
                                               className="object-center object-cover"
                                             />
                                           </div>
-                                          <a
-                                            href={item.href}
-                                            className="mt-6 block font-medium text-gray-900"
-                                          >
-                                            <span
-                                              className="absolute z-10 inset-0"
-                                              aria-hidden="true"
-                                            />
-                                            {item.name}
-                                          </a>
+                                          <Link href={item.href}>
+                                            <a className="mt-6 block font-medium text-gray-900">
+                                              <span
+                                                className="absolute z-10 inset-0"
+                                                aria-hidden="true"
+                                              />
+                                              {item.name}
+                                            </a>
+                                          </Link>
                                           <p
                                             aria-hidden="true"
                                             className="mt-1"
@@ -446,12 +443,11 @@ export default function Navbar() {
                                                 key={item.name}
                                                 className="flex"
                                               >
-                                                <a
-                                                  href={item.href}
-                                                  className="hover:text-gray-800"
-                                                >
-                                                  {item.name}
-                                                </a>
+                                                <Link href={item.href}>
+                                                  <a className="hover:text-gray-800">
+                                                    {item.name}
+                                                  </a>
+                                                </Link>
                                               </li>
                                             ))}
                                           </ul>
@@ -469,32 +465,31 @@ export default function Navbar() {
                   ))}
 
                   {navigation.pages.map((page) => (
-                    <a
-                      key={page.name}
-                      href={page.href}
-                      className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                    >
-                      {page.name}
-                    </a>
+                    <Link href={page.href}>
+                      <a
+                        key={page.name}
+                        className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                      >
+                        {page.name}
+                      </a>
+                    </Link>
                   ))}
                 </div>
               </Popover.Group>
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <a
-                    href="#"
-                    className="text-sm font-medium text-gray-700 hover:text-gray-800"
-                  >
-                    Sign in
-                  </a>
+                  <Link href="/signin">
+                    <a className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                      Sign in
+                    </a>
+                  </Link>
                   <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  <a
-                    href="#"
-                    className="text-sm font-medium text-gray-700 hover:text-gray-800"
-                  >
-                    Create account
-                  </a>
+                  <Link href="/register">
+                    <a className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                      Create account
+                    </a>
+                  </Link>
                 </div>
 
                 <div className="hidden lg:ml-8 lg:flex">
@@ -522,16 +517,18 @@ export default function Navbar() {
 
                 {/* Cart */}
                 <div className="ml-4 flow-root lg:ml-6">
-                  <a href="#" className="group -m-2 p-2 flex items-center">
-                    <ShoppingBagIcon
-                      className="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500"
-                      aria-hidden="true"
-                    />
-                    <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                      0
-                    </span>
-                    <span className="sr-only">items in cart, view bag</span>
-                  </a>
+                  <Link href="/cart">
+                    <a className="group -m-2 p-2 flex items-center">
+                      <ShoppingBagIcon
+                        className="flex-shrink-0 h-6 w-6 text-gray-400 group-hover:text-gray-500"
+                        aria-hidden="true"
+                      />
+                      <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
+                        0
+                      </span>
+                      <span className="sr-only">items in cart, view bag</span>
+                    </a>
+                  </Link>
                 </div>
               </div>
             </div>

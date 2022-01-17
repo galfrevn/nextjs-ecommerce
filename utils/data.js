@@ -1,0 +1,225 @@
+const data = {
+  products: [
+    {
+      name: "Free Shirt",
+      category: "Shirts",
+      images: [
+        {
+          src: "https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg",
+          alt: "Two each of gray, white, and black shirts laying flat.",
+        },
+        {
+          src: "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg",
+          alt: "Model wearing plain black basic tee.",
+        },
+        {
+          src: "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg",
+          alt: "Model wearing plain gray basic tee.",
+        },
+        {
+          src: "/images/shirt1.jpg",
+          alt: "Model wearing plain gray basic tee.",
+        },
+      ],
+      price: 70,
+      brand: "Nike",
+      rating: 4.5,
+      numReviews: 10,
+      countInStock: 20,
+      description: "A popular shirt",
+      slug: "free-shirt",
+      colors: [
+        { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
+        { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
+        { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" },
+      ],
+      sizes: [
+        { name: "XXS", inStock: false },
+        { name: "XS", inStock: true },
+        { name: "S", inStock: true },
+        { name: "M", inStock: true },
+        { name: "L", inStock: true },
+        { name: "XL", inStock: true },
+        { name: "2XL", inStock: true },
+        { name: "3XL", inStock: true },
+      ],
+      highlights: [
+        "Hand cut and sewn locally",
+        "Dyed with our proprietary colors",
+        "Pre-washed & pre-shrunk",
+        "Ultra-soft 100% cotton",
+      ],
+      details: 'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
+      breadcrumbs: [
+        { id: 1, name: 'Men', href: '#' },
+        { id: 2, name: 'Clothing', href: '#' },
+      ],
+    },
+    {
+      name: "Cheap Shirt",
+      category: "Shirts",
+      images: [
+        {
+          src: "https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg",
+          alt: "Two each of gray, white, and black shirts laying flat.",
+        },
+        {
+          src: "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg",
+          alt: "Model wearing plain black basic tee.",
+        },
+        {
+          src: "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg",
+          alt: "Model wearing plain gray basic tee.",
+        },
+        {
+          src: "/images/shirt2.jpg",
+          alt: "Model wearing plain gray basic tee.",
+        },
+      ],
+      price: 70,
+      brand: "Nike",
+      rating: 4.5,
+      numReviews: 10,
+      countInStock: 20,
+      description: "A popular shirt",
+      slug: "free-shirt-2",
+      colors: [
+        { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
+        { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
+        { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" },
+      ],
+      sizes: [
+        { name: "XXS", inStock: false },
+        { name: "XS", inStock: true },
+        { name: "S", inStock: true },
+        { name: "M", inStock: true },
+        { name: "L", inStock: true },
+        { name: "XL", inStock: true },
+        { name: "2XL", inStock: true },
+        { name: "3XL", inStock: true },
+      ],
+      highlights: [
+        "Hand cut and sewn locally",
+        "Dyed with our proprietary colors",
+        "Pre-washed & pre-shrunk",
+        "Ultra-soft 100% cotton",
+      ],
+      details: 'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
+      breadcrumbs: [
+        { id: 1, name: 'Men', href: '#' },
+        { id: 2, name: 'Clothing', href: '#' },
+      ],
+    },
+    {
+      name: "Expensive Shirt",
+      category: "Shirts",
+      images: [
+        {
+          src: "https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg",
+          alt: "Two each of gray, white, and black shirts laying flat.",
+        },
+        {
+          src: "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg",
+          alt: "Model wearing plain black basic tee.",
+        },
+        {
+          src: "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg",
+          alt: "Model wearing plain gray basic tee.",
+        },
+        {
+          src: "/images/shirt3.jpg",
+          alt: "Model wearing plain gray basic tee.",
+        },
+      ],
+      price: 70,
+      brand: "Nike",
+      rating: 4.5,
+      numReviews: 10,
+      countInStock: 20,
+      description: "A popular shirt",
+      slug: "free-shirt-3",
+      colors: [
+        { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
+        { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
+        { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" },
+      ],
+      sizes: [
+        { name: "XXS", inStock: false },
+        { name: "XS", inStock: true },
+        { name: "S", inStock: true },
+        { name: "M", inStock: true },
+        { name: "L", inStock: true },
+        { name: "XL", inStock: true },
+        { name: "2XL", inStock: true },
+        { name: "3XL", inStock: true },
+      ],
+      highlights: [
+        "Hand cut and sewn locally",
+        "Dyed with our proprietary colors",
+        "Pre-washed & pre-shrunk",
+        "Ultra-soft 100% cotton",
+      ],
+      details: 'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
+      breadcrumbs: [
+        { id: 1, name: 'Men', href: '#' },
+        { id: 2, name: 'Clothing', href: '#' },
+      ],
+    },
+    {
+      name: "Jean pants",
+      category: "Shirts",
+      images: [
+        {
+          src: "https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg",
+          alt: "Two each of gray, white, and black shirts laying flat.",
+        },
+        {
+          src: "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg",
+          alt: "Model wearing plain black basic tee.",
+        },
+        {
+          src: "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg",
+          alt: "Model wearing plain gray basic tee.",
+        },
+        {
+          src: "/images/pants1.jpg",
+          alt: "Model wearing plain gray basic tee.",
+        },
+      ],
+      price: 70,
+      brand: "Nike",
+      rating: 3,
+      numReviews: 10,
+      countInStock: 20,
+      description: "A popular shirt",
+      slug: "free-shirt-4",
+      colors: [
+        { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
+        { name: "Red", class: "bg-red-900", selectedClass: "ring-gray-400" },
+        { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" },
+      ],
+      sizes: [
+        { name: "XXS", inStock: false },
+        { name: "XS", inStock: true },
+        { name: "S", inStock: true },
+        { name: "M", inStock: true },
+        { name: "L", inStock: true },
+        { name: "XL", inStock: true },
+        { name: "2XL", inStock: true },
+        { name: "3XL", inStock: true },
+      ],
+      highlights: [
+        "Hand cut and sewn locally",
+        "Dyed with our proprietary colors",
+        "Pre-washed & pre-shrunk",
+        "Ultra-soft 100% cotton",
+      ],
+      details: 'The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming "Charcoal Gray" limited release.',
+      breadcrumbs: [
+        { id: 1, name: 'Men', href: '#' },
+        { id: 2, name: 'Clothing', href: '#' },
+      ],
+    },
+  ],
+};
+export default data;
