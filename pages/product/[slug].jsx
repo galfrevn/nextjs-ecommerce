@@ -38,7 +38,7 @@ export default function ProductScreen(props) {
 
   // Product Fetch
   const router = useRouter();
-  const { dispatch } = useContext(Store);
+  const { state, dispatch } = useContext(Store);
   const { product } = props;
   if (!product) {
     return <div>Product not found</div>;
@@ -50,18 +50,19 @@ export default function ProductScreen(props) {
 
   // Add to Cart Function
   const addToCartHandler = async () => {
+    const existItem = state.cart.cartItems.find((x) => x._id === product._id);
+    const quantity = existItem ? existItem.quantity + 1 : 1;
     const { data } = await axios.get(`/api/products/${product._id}`);
-    if (data.countInStock <= 0) {
+    if (data.countInStock < quantity) {
       window.alert('Sorry. Product is out of stock');
       return;
     }
-    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity: 1 } });
-    router.push('/cart');
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity } });
   };
 
   return (
     <Layout>
-      <div className="bg-white mt-28">
+      <div className="bg-white mt-10">
         <div className="pt-6">
           <nav aria-label="Breadcrumb">
             <ol
