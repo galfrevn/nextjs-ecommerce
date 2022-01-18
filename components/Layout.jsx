@@ -1,16 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Head from 'next/head'
 import Navbar from './Navbar'
 
-export default function Layout({ children }) {
+import { Store } from '../utils/Store';
+
+export default function Layout({ title, description, children }) {
+  const { state, dispatch } = useContext(Store);
+  const { cart } = state
+  
   return (
     <div>
 
       <Head>
-        <title>Ecommerce</title>
+        <title>{title ? `${title} - Ecommerce` : `Ecommerce` } </title>
+        {description && <meta name='description' content={description}></meta> }
       </Head>
 
-      <Navbar />
+      <Navbar items={cart.cartItems.length} />
 
       <main className="max-w-full mx-auto px-4 mt-1 sm:px-6 lg:px-8">
         {children}

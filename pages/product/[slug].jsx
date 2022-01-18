@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+// React
+import React, { useState, useContext } from "react";
+// UI Libraries
 import { StarIcon } from "@heroicons/react/solid";
+import { RadioGroup } from "@headlessui/react";
+// Components
 import Layout from "../../components/Layout";
 import Product from "../../models/Product";
+// Add to Cart Actions
 import db from "../../utils/db";
-import { RadioGroup } from "@headlessui/react";
+import axios from 'axios';
+import { Store } from '../../utils/Store';
+import { useRouter } from "next/router";
 
 const temp = {
   colors: [
@@ -28,18 +35,33 @@ function classNames(...classes) {
 }
 
 export default function ProductScreen(props) {
-  const { product } = props;
 
+  // Product Fetch
+  const router = useRouter();
+  const { dispatch } = useContext(Store);
+  const { product } = props;
   if (!product) {
     return <div>Product not found</div>;
   }
 
+  // React Hooks
   const [selectedColor, setSelectedColor] = useState(temp.colors[0]);
   const [selectedSize, setSelectedSize] = useState(temp.sizes[2]);
 
+  // Add to Cart Function
+  const addToCartHandler = async () => {
+    const { data } = await axios.get(`/api/products/${product._id}`);
+    if (data.countInStock <= 0) {
+      window.alert('Sorry. Product is out of stock');
+      return;
+    }
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...product, quantity: 1 } });
+    router.push('/cart');
+  };
+
   return (
     <Layout>
-      <div className="bg-white">
+      <div className="bg-white mt-28">
         <div className="pt-6">
           <nav aria-label="Breadcrumb">
             <ol
@@ -176,7 +198,7 @@ export default function ProductScreen(props) {
                 </div>
               </div>
 
-              <form className="mt-10">
+              <div className="mt-10">
                 <div>
                   <h3 className="text-sm text-gray-900 font-medium">Color</h3>
 
@@ -299,12 +321,12 @@ export default function ProductScreen(props) {
                 </div>
 
                 <button
-                  type="submit"
                   className="mt-10 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  onClick={addToCartHandler}
                 >
                   Add to bag
                 </button>
-              </form>
+              </div>
             </div>
 
             <div className="py-10 lg:pt-6 lg:pb-16 lg:col-start-1 lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">

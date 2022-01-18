@@ -143,7 +143,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function Navbar() {
+export default function Navbar({ items }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -320,7 +320,7 @@ export default function Navbar() {
         </Dialog>
       </Transition.Root>
 
-      <header className="relative bg-white z-10">
+      <header className="fixed top-0 w-screen bg-white z-10">
         <p className="bg-indigo-600 h-10 flex items-center justify-center text-sm font-medium text-white px-4 sm:px-6 lg:px-8">
           Get free delivery on orders over $100
         </p>
@@ -524,7 +524,7 @@ export default function Navbar() {
                         aria-hidden="true"
                       />
                       <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                        0
+                        {items}
                       </span>
                       <span className="sr-only">items in cart, view bag</span>
                     </a>
