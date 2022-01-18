@@ -3,21 +3,39 @@ import Layout from "../components/Layout";
 
 import axios from "axios";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState  } from "react";
+import { useRouter } from 'next/router';
+import Cookies from 'js-cookie';
+import { Store } from '../utils/Store';
 
 export default function Example() {
   // React Hooks
+  const router = useRouter();
+
+  const { redirect } = router.query; 
+  const { state, dispatch } = useContext(Store);
+  const { userInfo } = state;
+
+  useEffect(() => {
+    if (userInfo) {
+      router.push('/');
+    }
+  }, []);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
 
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("/api/users/login", {
+      const { data } = await axios.post('/api/users/login', {
         email,
         password,
       });
-      alert("Success login");
+      dispatch({ type: 'USER_LOGIN', payload: data });
+      Cookies.set('userInfo', data);
+      router.push(redirect || '/');
     } catch (err) {
       alert(err.response.data ? err.response.data.message : err.message);
     }

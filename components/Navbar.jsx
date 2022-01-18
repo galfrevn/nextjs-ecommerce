@@ -12,6 +12,7 @@ import { Store } from "../utils/Store";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Cookies from 'js-cookie';
 
 const navigation = {
   categories: [
@@ -154,6 +155,7 @@ function Navbar({ items }) {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const {
+    userInfo,
     cart: { cartItems },
   } = state;
 
@@ -172,6 +174,13 @@ function Navbar({ items }) {
 
   const checkoutHandler = () => {
     router.push("/shipping");
+  };
+
+  const logoutClickHandler = () => {
+    dispatch({ type: "USER_LOGOUT" });
+    Cookies.remove("userInfo");
+    Cookies.remove("cartItems");
+    router.push("/");
   };
 
   return (
@@ -315,11 +324,19 @@ function Navbar({ items }) {
 
               <div className="border-t border-gray-200 py-6 px-4 space-y-6">
                 <div className="flow-root">
-                  <Link href="/signin">
-                    <a className="-m-2 p-2 block font-medium text-gray-900">
-                      Sign in
-                    </a>
-                  </Link>
+                  {userInfo ? (
+                    <button onClick={logoutClickHandler}>
+                      <a className="-m-2 p-2 block font-medium text-gray-900">
+                        {userInfo.name}
+                      </a>
+                    </button>
+                  ) : (
+                    <Link href="/signin">
+                      <a className="-m-2 p-2 block font-medium text-gray-900">
+                        Sign in
+                      </a>
+                    </Link>
+                  )}
                 </div>
                 <div className="flow-root">
                   <Link href="/register">
@@ -618,7 +635,10 @@ function Navbar({ items }) {
                             className="-my-6 divide-y divide-gray-200"
                           >
                             {cartItems.map((product) => (
-                              <li key={product.name.toLowerCase()} className="py-6 flex">
+                              <li
+                                key={product.name.toLowerCase()}
+                                className="py-6 flex"
+                              >
                                 <div className="flex-shrink-0 w-24 h-24 border border-gray-200 rounded-md overflow-hidden">
                                   <img
                                     src={product.image1}
