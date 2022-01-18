@@ -4,12 +4,10 @@ const productSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     category: { type: String, required: true },
-    images: [
-      {
-        src: { type: String, required: true },
-        alt: { type: String },
-      },
-    ],
+    image1: { type: String, required: true },
+    image2: { type: String, required: true },
+    image3: { type: String, required: true },
+    image4: { type: String, required: true },
     price: { type: Number, required: true },
     brand: { type: String, required: true },
     rating: { type: Number, required: true, default: 0 },
@@ -17,28 +15,13 @@ const productSchema = new mongoose.Schema(
     countInStock: { type: Number, required: true, default: 0 },
     description: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
-    colors: [
-      {
-        name: { type: String, required: true },
-        class: { type: String },
-        selectedClass: { type: String },
-      },
-    ],
-    sizes: [
-      {
-        name: { type: String, required: true },
-        inStock: { type: Boolean, default: true },
-      },
-    ],
-    highlights: [{ type: String }],
+    highlight1: { type: String },
+    highlight2: { type: String },
+    highlight3: { type: String },
+    highlight4: { type: String },
     details: { type: String, required: true },
-    breadcrumbs: [
-      {
-        id: { type: Number, required: true },
-        name: { type: String, required: true },
-        href: { type: String, required: true },
-      },
-    ],
+    breadcrumbs1: { type: String },
+    breadcrumbs2: { type: String },
   },
   {
     timestamps: true,

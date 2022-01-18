@@ -2,8 +2,11 @@ import Link from "next/link";
 import Layout from "../components/Layout";
 import data from "../utils/data";
 
-export default function Home() {
-  const { products } = data;
+import db from '../utils/db';
+import Product from '../models/Product';
+
+export default function Home(props) {
+  const { products } = props;
 
   return (
     <Layout>
@@ -18,7 +21,7 @@ export default function Home() {
               <div key={product.name} className="group relative">
                 <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
                   <img
-                    src={product.images[3].src}
+                    src={product.image1}
                     alt={product.name}
                     className="w-full h-full object-center object-cover lg:w-full lg:h-full"
                   />
@@ -51,4 +54,15 @@ export default function Home() {
       </div>
     </Layout>
   );
+}
+
+export async function getServerSideProps() {
+  await db.connect();
+  const products = await Product.find({}).lean();
+  await db.disconnect();
+  return {
+    props: {
+      products: products.map(db.convertDocToObj),
+    },
+  };
 }
