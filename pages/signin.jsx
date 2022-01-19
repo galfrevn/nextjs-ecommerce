@@ -8,10 +8,16 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { Store } from "../utils/Store";
 import toast, { Toaster } from "react-hot-toast";
+import { Controller, useForm } from 'react-hook-form';
 
 export default function Example() {
   // React Hooks
   const router = useRouter();
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
 
   const { redirect } = router.query;
   const { state, dispatch } = useContext(Store);
@@ -27,9 +33,9 @@ export default function Example() {
   const [password, setPassword] = useState("");
 
   const submitHandler = async (e) => {
-    e.preventDefault();
+   
+    const toastId = toast.loading("Loging in");
     try {
-      const toastId = toast.loading("Loging in");
       const { data } = await axios.post("/api/users/login", {
         email,
         password,
@@ -41,7 +47,9 @@ export default function Example() {
         id: toastId,
       });
     } catch (err) {
-      alert(err.response.data ? err.response.data.message : err.message);
+      toast.error(`${err.response.data ? err.response.data.message : err.message}`, {
+        id: toastId,
+      });
     }
   };
 
@@ -74,7 +82,7 @@ export default function Example() {
               </Link>
             </p>
           </div>
-          <form className="mt-8 space-y-6" onSubmit={submitHandler}>
+          <form className="mt-8 space-y-6" onSubmit={handleSubmit(submitHandler)}>
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
               <div>

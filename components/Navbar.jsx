@@ -12,7 +12,7 @@ import { Store } from "../utils/Store";
 import dynamic from "next/dynamic";
 import axios from "axios";
 import { useRouter } from "next/router";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 const navigation = {
   categories: [
@@ -338,13 +338,17 @@ function Navbar({ items }) {
                     </Link>
                   )}
                 </div>
-                <div className="flow-root">
-                  <Link href="/register">
-                    <a className="-m-2 p-2 block font-medium text-gray-900">
-                      Create account
-                    </a>
-                  </Link>
-                </div>
+                {userInfo ? (
+                  ""
+                ) : (
+                  <div className="flow-root">
+                    <Link href="/register">
+                      <a className="-m-2 p-2 block font-medium text-gray-900">
+                        Create account
+                      </a>
+                    </Link>
+                  </div>
+                )}
               </div>
 
               <div className="border-t border-gray-200 py-6 px-4">
@@ -373,7 +377,7 @@ function Navbar({ items }) {
 
         <nav
           aria-label="Top"
-          className="max-w-full mx-auto px-4 sm:px-6 lg:px-8"
+          className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 sticky top-0"
         >
           <div className="border-b border-gray-200">
             <div className="h-16 flex items-center">
