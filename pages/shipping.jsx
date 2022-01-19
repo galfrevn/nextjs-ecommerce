@@ -66,7 +66,7 @@ export default function Shipping() {
 
   return (
     <Layout>
-      <div className="mt-14 mb-24">
+      <div className="mt-14 mb-24 mx-auto max-w-6xl">
         <form onSubmit={handleSubmit(submitHandler)}>
           <div>
             <div className="md:grid md:grid-cols-3 md:gap-6">
@@ -83,7 +83,7 @@ export default function Shipping() {
               </div>
               <div className="mt-5 md:mt-0 md:col-span-2">
                 <div>
-                  <div className="shadow sm:rounded-md sm:overflow-hidden">
+                  <div className="shadow-sm sm:rounded-md sm:overflow-hidden">
                     <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
                       <div className="grid grid-cols-3 gap-6">
                         <div className="col-span-3 sm:col-span-2">
@@ -134,7 +134,7 @@ export default function Shipping() {
               </div>
               <div className="mt-5 md:mt-0 md:col-span-2">
                 <div action="#" method="POST">
-                  <div className="shadow overflow-hidden sm:rounded-md">
+                  <div className="shadow-sm overflow-hidden sm:rounded-md">
                     <div className="px-4 py-5 bg-white sm:p-6">
                       <div className="grid grid-cols-6 gap-6">
                         <div className="col-span-6 sm:col-span-3">
@@ -274,7 +274,7 @@ export default function Shipping() {
               </div>
               <div className="mt-5 md:mt-0 md:col-span-2">
                 <div action="#" method="POST">
-                  <div className="shadow overflow-hidden sm:rounded-md">
+                  <div className="shadow-sm overflow-hidden sm:rounded-md">
                     <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
                       <fieldset>
                         <div>
@@ -291,7 +291,7 @@ export default function Shipping() {
                               {...register}
                               type="radio"
                               required
-                              name="push-notifications"
+                              name="payment"
                               className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                               value="Paypal"
                             />
@@ -307,7 +307,7 @@ export default function Shipping() {
                               {...register}
                               type="radio"
                               required
-                              name="push-notifications"
+                              name="payment"
                               className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                               value="Stripe"
                             />
@@ -323,7 +323,7 @@ export default function Shipping() {
                               {...register}
                               type="radio"
                               required
-                              name="push-notifications"
+                              name="payment"
                               className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                               value="Cash"
                             />

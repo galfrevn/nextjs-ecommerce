@@ -526,17 +526,30 @@ function Navbar({ items }) {
 
               <div className="ml-auto flex items-center">
                 <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <Link href="/signin">
-                    <a className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                      Sign in
-                    </a>
-                  </Link>
-                  <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  <Link href="/register">
-                    <a className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                      Create account
-                    </a>
-                  </Link>
+                  {userInfo ? (
+                    <Link href="/profile">
+                      <a className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                        {userInfo.name}
+                      </a>
+                    </Link>
+                  ) : (
+                    <>
+                      <Link href="/signin">
+                        <a className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                          Sign in
+                        </a>
+                      </Link>
+                      <span
+                        className="h-6 w-px bg-gray-200"
+                        aria-hidden="true"
+                      />
+                      <Link href="/register">
+                        <a className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                          Create account
+                        </a>
+                      </Link>
+                    </>
+                  )}
                 </div>
 
                 <div className="hidden lg:ml-8 lg:flex">
@@ -726,7 +739,7 @@ function Navbar({ items }) {
                       <div className="mt-6">
                         <a
                           onClick={checkoutHandler}
-                          className="flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                          className="flex justify-center items-center px-6 py-3 border cursor-pointer border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
                         >
                           Checkout
                         </a>
