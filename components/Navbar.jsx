@@ -737,12 +737,20 @@ function Navbar({ items }) {
                         Shipping and taxes calculated at checkout.
                       </p>
                       <div className="mt-6">
-                        <a
-                          onClick={checkoutHandler}
-                          className="flex justify-center items-center px-6 py-3 border cursor-pointer border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
-                        >
-                          Checkout
-                        </a>
+                        {cartItems == 0 ? (
+                          <a
+                            className="cursor-not-allowed flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-gray-500 bg-gray-200"
+                          >
+                            Checkout
+                          </a>
+                        ) : (
+                          <a
+                            onClick={checkoutHandler}
+                            className="disabled flex justify-center items-center px-6 py-3 border cursor-pointer border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                          >
+                            Checkout
+                          </a>
+                        )}
                       </div>
                       <div className="mt-6 flex justify-center text-sm text-center text-gray-500">
                         <p>

@@ -11,7 +11,7 @@ export default function Shipping() {
   const { state, dispatch } = useContext(Store);
   const {
     userInfo,
-    cart: { shippingAddress },
+    cart: { cartItems, shippingAddress },
   } = state;
 
   const {
@@ -24,17 +24,30 @@ export default function Shipping() {
 
   useEffect(() => {
     if (!userInfo) {
-      router.push("/login?redirect=/shipping");
+      router.push("/signin?redirect=/shipping");
     }
-    setValue("name", userInfo.name);
-    setValue("email", userInfo.email);
-    setValue("address", shippingAddress.address);
-    setValue("city", shippingAddress.city);
-    setValue("postalCode", shippingAddress.postalCode);
-    setValue("state", shippingAddress.state);
-    setValue("country", shippingAddress.country);
-    setValue("payment", shippingAddress.payment);
+    if (userInfo) {
+      setValue("name", userInfo.name);
+      setValue("email", userInfo.email);
+      setValue("address", shippingAddress.address);
+      setValue("city", shippingAddress.city);
+      setValue("postalCode", shippingAddress.postalCode);
+      setValue("state", shippingAddress.state);
+      setValue("country", shippingAddress.country);
+      setValue("payment", shippingAddress.payment);
+    }
   }, []);
+
+  useEffect(() => {
+    if (cartItems == 0) {
+      router.push("/");
+    }
+  }, [cartItems])
+
+  const handleRadio = (e) => {
+    const paymentMethod = e.target.value;
+    console.log(paymentMethod);
+  }
 
   const submitHandler = ({
     fullName,
@@ -61,7 +74,7 @@ export default function Shipping() {
         payment,
       })
     );
-    router.push("/payment");
+    router.push("/placeorder");
   };
 
   return (
@@ -288,12 +301,13 @@ export default function Shipping() {
                         <div className="mt-4 space-y-4">
                           <div className="flex items-center">
                             <input
-                              {...register}
+                              {...register("payment")}
                               type="radio"
                               required
                               name="payment"
                               className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                               value="Paypal"
+                              onChange={handleRadio}
                             />
                             <label
                               htmlFor="push-everything"
@@ -304,12 +318,13 @@ export default function Shipping() {
                           </div>
                           <div className="flex items-center">
                             <input
-                              {...register}
+                              {...register("payment")}
                               type="radio"
                               required
                               name="payment"
                               className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                               value="Stripe"
+                              onChange={handleRadio}
                             />
                             <label
                               htmlFor="push-email"
@@ -320,12 +335,13 @@ export default function Shipping() {
                           </div>
                           <div className="flex items-center">
                             <input
-                              {...register}
+                              {...register("payment")}
                               type="radio"
                               required
                               name="payment"
                               className="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300"
                               value="Cash"
+                              onChange={handleRadio}
                             />
                             <label
                               htmlFor="push-nothing"
