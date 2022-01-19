@@ -9,7 +9,7 @@ export default function Shipping() {
   const { userInfo } = state;
 
   if (!userInfo) {
-    router.push('/');
+    router.push('/signin');
   }
 
   return <div>Shipping page</div>;

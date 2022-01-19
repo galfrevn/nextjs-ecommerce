@@ -1,18 +1,16 @@
+import axios from "axios";
+import { useRouter } from "next/router";
+import NextLink from "next/link";
+import React, { useContext, useEffect, useState } from "react";
+import { Store } from "../utils/Store";
+import Cookies from "js-cookie";
+import Link from "next/link";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import Layout from "../components/Layout";
-
-import axios from "axios";
-import Link from "next/link";
-import React, { useContext, useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import Cookies from "js-cookie";
-import { Store } from "../utils/Store";
 import toast, { Toaster } from "react-hot-toast";
 
-export default function Example() {
-  // React Hooks
+export default function Register() {
   const router = useRouter();
-
   const { redirect } = router.query;
   const { state, dispatch } = useContext(Store);
   const { userInfo } = state;
@@ -23,21 +21,28 @@ export default function Example() {
     }
   }, []);
 
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      toast.error("passwords don't match")
+      return;
+    }
     try {
-      const toastId = toast.loading("Loging in");
-      const { data } = await axios.post("/api/users/login", {
+      const toastId = toast.loading("Creating user");
+      const { data } = await axios.post("/api/users/register", {
+        name,
         email,
         password,
       });
       dispatch({ type: "USER_LOGIN", payload: data });
-      Cookies.set("userInfo", JSON.stringify(data));
+      Cookies.set("userInfo", data);
       router.push(redirect || "/");
-      toast.success("Login Successfully", {
+      toast.success("Successfully registered", {
         id: toastId,
       });
     } catch (err) {
@@ -47,7 +52,7 @@ export default function Example() {
 
   return (
     <Layout>
-      
+
       <Toaster
         toastOptions={{
           className: "text-xs",
@@ -63,13 +68,13 @@ export default function Example() {
               alt="Workflow"
             />
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-              Sign in to your account
+              Create your account
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
-              Or{" "}
-              <Link href="/register">
+              Already have an account?{" "}
+              <Link href="/signin">
                 <a className="font-medium text-indigo-600 hover:text-indigo-500">
-                  create yours now for free
+                  Sign in
                 </a>
               </Link>
             </p>
@@ -77,6 +82,21 @@ export default function Example() {
           <form className="mt-8 space-y-6" onSubmit={submitHandler}>
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
+              <div>
+                <label htmlFor="email-address" className="sr-only">
+                  Name
+                </label>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 border text-xs py-3 border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Full name"
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
               <div>
                 <label htmlFor="email-address" className="sr-only">
                   Email address
@@ -87,7 +107,7 @@ export default function Example() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 text-xs py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-none relative block w-full px-3 border text-xs py-3 border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Email address"
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -102,36 +122,25 @@ export default function Example() {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="appearance-none rounded-none relative block w-full px-3 text-xs py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  className="appearance-none rounded-none relative block w-full px-3 text-xs py-3 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-            </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                />
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
-                >
-                  Remember me
+              <div>
+                <label htmlFor="password2" className="sr-only">
+                  Password
                 </label>
-              </div>
-
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Forgot your password?
-                </a>
+                <input
+                  id="password2"
+                  name="password2"
+                  type="password2"
+                  autoComplete="current-password"
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 text-xs py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Confirm password"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
               </div>
             </div>
 
@@ -146,7 +155,7 @@ export default function Example() {
                     aria-hidden="true"
                   />
                 </span>
-                Sign in
+                Register
               </button>
             </div>
           </form>
