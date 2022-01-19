@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Layout from "../components/Layout";
 import { Store } from "../utils/Store";
@@ -6,29 +6,69 @@ import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Heading from "../components/Heading";
+import { getError } from "../utils/error";
+import Cookies from "js-cookie";
+import toast, { Toaster } from "react-hot-toast";
 
 import { BadgeCheckIcon } from "@heroicons/react/outline";
 
 function PlaceOrder() {
-
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const {
+    userInfo,
     cart: { cartItems, shippingAddress },
   } = state;
   const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
   const itemsPrice = round2(
     cartItems.reduce((a, c) => a + c.price * c.quantity, 0)
   );
+  const totalPrice = round2(itemsPrice);
 
   useEffect(() => {
     if (cartItems == 0) {
       router.push("/");
     }
-  }, [])
+  }, []);
+
+  const placeOrderHandler = async () => {
+    const toastId = toast.loading("Procesing your order");
+    try {
+      const { data } = await axios.post(
+        "/api/orders",
+        {
+          orderOItems: cartItems,
+          shippingAddress,
+          itemsPrice,
+          totalPrice
+        },
+        {
+          headers: {
+            authorization: `Bearer ${userInfo.token}`,
+          },
+        }
+      );
+      dispatch({ type: "CART_CLEAR" });
+      Cookies.remove("cartItems");
+      toast.success("Order successfully created", {
+        id: toastId,
+      });
+      router.push(`/order/${data._id}`);
+    } catch (err) {
+      toast.error(getError(err), {
+        id: toastId,
+      });
+    }
+  };
 
   return (
     <Layout>
+      <Toaster
+        toastOptions={{
+          className: "text-xs",
+        }}
+      />
+
       <Heading />
       <div className="mt-6 mb-24 max-w-7xl mx-auto ">
         <div className="h-full flex flex-col bg-white shadow-sm ">
@@ -78,7 +118,9 @@ function PlaceOrder() {
                           </p>
                         </div>
                         <div className="flex-1 flex items-end justify-between text-sm">
-                          <p className="text-gray-500">Quantity: <strong> {product.quantity}</strong> </p>
+                          <p className="text-gray-500">
+                            Quantity: <strong> {product.quantity}</strong>{" "}
+                          </p>
                         </div>
                       </div>
                     </li>
@@ -99,11 +141,12 @@ function PlaceOrder() {
           </div>
 
           <div className="mt-6">
-            <a className="flex justify-center items-center px-6 py-3 border cursor-pointer border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
-              Continue paying
-            </a>
+            <button onClick={placeOrderHandler}>
+              <a className="flex justify-center items-center px-6 py-3 border cursor-pointer border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700">
+                Continue paying
+              </a>
+            </button>
           </div>
-
         </div>
       </div>
     </Layout>
