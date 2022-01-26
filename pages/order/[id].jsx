@@ -14,6 +14,8 @@ import { BadgeCheckIcon } from "@heroicons/react/outline";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
+import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+
 function reducer(state, action) {
   switch (action.type) {
     case "FETCH_REQUEST":
@@ -37,15 +39,19 @@ function reducer(state, action) {
 
 function Order({ params }) {
   const orderId = params.id;
+  const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
   const router = useRouter();
   const { state } = useContext(Store);
   const { userInfo } = state;
 
-  const [{ loading, error, order }, dispatch] = useReducer(reducer, {
-    loading: true,
-    order: {},
-    error: "",
-  });
+  const [{ loading, error, order, successPay }, dispatch] = useReducer(
+    reducer,
+    {
+      loading: true,
+      order: {},
+      error: "",
+    }
+  );
 
   const {
     shippingAddress,
@@ -75,13 +81,83 @@ function Order({ params }) {
         dispatch({ type: "FETCH_FAIL", payload: getError(err) });
       }
     };
-    if (!order._id || (order._id && order._id !== orderId)) {
+    if (!order._id || successPay || (order._id && order._id !== orderId)) {
       fetchOrder();
+      if (successPay) {
+        dispatch({ type: "PAY_RESET" });
+      }
+    } else {
+      const loadPaypalScript = async () => {
+        const { data: clientId } = await axios.get("/api/keys/paypal", {
+          headers: { authorization: `Bearer ${userInfo.token}` },
+        });
+        paypalDispatch({
+          type: "resetOptions",
+          value: {
+            "client-id": clientId,
+            currency: "USD",
+          },
+        });
+        paypalDispatch({ type: "setLoadingStatus", value: "pending" });
+      };
+      loadPaypalScript();
     }
-  }, [order]);
+  }, [order, successPay]);
+
+  function createOrder(data, actions) {
+    return actions.order
+      .create({
+        purchase_units: [
+          {
+            amount: { value: totalPrice },
+          },
+        ],
+      })
+      .then((orderID) => {
+        return orderID;
+      });
+  }
+
+  function onApprove(data, actions) {
+    return actions.order.capture().then(async function (details) {
+      const toastId = toast.loading("Procesing payment");
+      try {
+        dispatch({ type: "PAY_REQUEST" });
+        const { data } = await axios.put(
+          `/api/orders/${order._id}/pay`,
+          details,
+          {
+            headers: { authorization: `Bearer ${userInfo.token}` },
+          }
+        );
+        dispatch({ type: "PAY_SUCCESS", payload: data });
+        toast.success("Payment successul!", {
+          id: toastId,
+        });
+      } catch (err) {
+        dispatch({ type: "PAY_FAIL", payload: getError(err) });
+        toast.error(
+          { err },
+          {
+            id: toastId,
+          }
+        );
+      }
+    });
+  }
+
+  function onError(err) {
+    toast.error({ err });
+  }
 
   return (
     <Layout>
+      <Toaster
+        toastOptions={{
+          className: "text-xs",
+        }}
+      />
+
       {loading ? (
         <div className="max-w-4xl pt-10 w-full h-full mx-auto">
           <Skeleton count={5} />
@@ -89,7 +165,6 @@ function Order({ params }) {
       ) : (
         <div className="2xl:container 2xl:mx-auto py-14 mb-10 px-4 md:px-6 xl:px-20">
           <div className="flex flex-col xl:flex-row justify-center items-center space-y-10 xl:space-y-0 xl:space-x-8">
-
             {/* Image */}
             <div className="w-fulllg:w-9/12 xl:w-full">
               <img
@@ -108,7 +183,7 @@ function Order({ params }) {
                 alt="wardrobe "
               />
             </div>
-            
+
             {/* Right */}
             <div className="flex justify-center flex-col items-start w-full  xl:w-full ">
               <h3 className="w-full text-left font-bold text-2xl text-gray-800">
@@ -135,7 +210,10 @@ function Order({ params }) {
               )}
               <div className="flex justify-center items-center w-full mt-8  flex-col space-y-4 ">
                 {orderItems.map((item) => (
-                  <div className="flex md:flex-row justify-start items-start md:items-center w-full">
+                  <div
+                    key={item.id}
+                    className="flex md:flex-row justify-start items-start md:items-center w-full"
+                  >
                     <div className="md:w-24 w-36">
                       <img
                         className="rounded-md  md:block"
@@ -153,13 +231,17 @@ function Order({ params }) {
                             Size: <span className="text-gray-800"> Small</span>
                           </p>
                           <p className="text-sm leading-none text-gray-600">
-                            Quantity: <span className="text-gray-800"> {item.quantity} </span>
+                            Quantity:{" "}
+                            <span className="text-gray-800">
+                              {" "}
+                              {item.quantity}{" "}
+                            </span>
                           </p>
                         </div>
                       </div>
                       <div className="flex mt-4 md:mt-0 md:justify-end items-center w-full ">
                         <p className="text-sm font-semibold text-gray-800">
-                         ${item.price}.00
+                          ${item.price}.00
                         </p>
                       </div>
                     </div>
@@ -201,14 +283,16 @@ function Order({ params }) {
                         Subtotal
                       </p>
                       <p className="text-base leading-4 text-gray-600">
-                       ${itemsPrice}.00
+                        ${itemsPrice}.00
                       </p>
                     </div>
                     <div className="flex justify-between  w-full">
                       <p className="text-base leading-4 text-gray-800">
                         Shipping
                       </p>
-                      <p className="text-base leading-4 text-gray-600">$10.00</p>
+                      <p className="text-base leading-4 text-gray-600">
+                        $10.00
+                      </p>
                     </div>
                   </div>
                   <div className="flex justify-between items-center w-full">
@@ -219,13 +303,33 @@ function Order({ params }) {
                       ${totalPrice + 10}.00
                     </p>
                   </div>
-                  <div className="flex w-full justify-center items-center pt-1 md:pt-4  xl:pt-8 space-y-6 md:space-y-8 flex-col">
-                    
-                  </div>
+                  {!isPaid ? (
+                    <div>
+                      {isPending ? (
+                        <div className="max-w-4xl pt-10 w-full h-full mx-auto">
+                          <Skeleton count={2} />
+                        </div>
+                      ) : (
+                        <div className="flex flex-col">
+                          <PayPalButtons
+                            createOrder={createOrder}
+                            onApprove={onApprove}
+                            onError={onError}
+                          ></PayPalButtons>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="flex flex-col text-center items-center">
+                      <div className="bg-indigo-300 p-3 w-full mt-3 text-white rounded-md">
+                        The order has been payed
+                      </div>
+                      <p className="text-xs mt-2">Your order will be sent as soon as posible</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       )}
