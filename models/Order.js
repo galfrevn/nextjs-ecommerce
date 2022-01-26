@@ -19,6 +19,7 @@ const orderSchema = new mongoose.Schema(
       payment: { type: String, required: true },
       state: { type: String, required: true },
     },
+    paymentResult: { id: String, status: String, email_address: String },
     itemsPrice: { type: Number, required: true },
     totalPrice: { type: Number, required: true },
     isPaid: { type: Boolean, required: true, default: false },

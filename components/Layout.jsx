@@ -18,7 +18,7 @@ export default function Layout({ title, description, children }) {
 
       <Navbar items={cart.cartItems.length} />
 
-      <main className="max-w-full mx-auto px-4 mt-1 sm:px-6 lg:px-8">
+      <main className="max-w-full mx-auto px-4 mt-20 sm:px-6 lg:px-8">
         {children}
       </main>
 
