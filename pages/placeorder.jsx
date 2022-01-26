@@ -37,7 +37,7 @@ function PlaceOrder() {
       const { data } = await axios.post(
         "/api/orders",
         {
-          orderOItems: cartItems,
+          orderItems: cartItems,
           shippingAddress,
           itemsPrice,
           totalPrice
@@ -48,7 +48,7 @@ function PlaceOrder() {
           },
         }
       );
-      dispatch({ type: "CART_CLEAR" });
+      dispatch({ type: 'CART_CLEAR' });
       Cookies.remove("cartItems");
       toast.success("Order successfully created", {
         id: toastId,
