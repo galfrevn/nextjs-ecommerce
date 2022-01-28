@@ -321,7 +321,7 @@ function Order({ params }) {
                     </div>
                   ) : (
                     <div className="flex flex-col text-center items-center">
-                      <div className="bg-indigo-300 p-3 w-full mt-3 text-white rounded-md">
+                      <div className="bg-indigo-500 p-3 w-full mt-3 text-white rounded-md">
                         The order has been payed
                       </div>
                       <p className="text-xs mt-2">Your order will be sent as soon as posible</p>

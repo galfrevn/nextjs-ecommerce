@@ -22,7 +22,7 @@ export default function Layout({ title, description, children }) {
         {children}
       </main>
 
-      <footer className='w-full bg-indigo-600 p-3 text-sm text-center text-white' >
+      <footer className='w-full fixed bottom-0 left-0 bg-indigo-600 p-3 text-sm text-center text-white' >
         All rights reserved
       </footer>
 
