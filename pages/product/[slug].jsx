@@ -36,6 +36,11 @@ function classNames(...classes) {
 }
 
 export default function ProductScreen(props) {
+  
+  // React Hooks
+  const [selectedColor, setSelectedColor] = useState(temp.colors[0]);
+  const [selectedSize, setSelectedSize] = useState(temp.sizes[2]);
+  
   // Product Fetch
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
@@ -43,10 +48,6 @@ export default function ProductScreen(props) {
   if (!product) {
     return <div>Product not found</div>;
   }
-
-  // React Hooks
-  const [selectedColor, setSelectedColor] = useState(temp.colors[0]);
-  const [selectedSize, setSelectedSize] = useState(temp.sizes[2]);
 
   // Add to Cart Function
   const addToCartHandler = async () => {

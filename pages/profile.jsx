@@ -125,6 +125,7 @@ function Profile() {
                     <div className="md:w-24 w-36 grid grid-cols-2 grid-rows-2 gap-1 bg-gray-50">
                       {item.orderItems.map((img) => (
                         <img
+                          key={img.name}
                           className="rounded-md  md:block"
                           src={img.image1}
                           alt={img.name}

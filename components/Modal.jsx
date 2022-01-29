@@ -6,8 +6,6 @@ import { StarIcon } from "@heroicons/react/solid";
 
 import { useRouter } from "next/router";
 
-const router = useRouter();
-const { state, dispatch } = useContext(Store);
 const {
   userInfo,
   cart: { cartItems },
@@ -39,6 +37,9 @@ export default function Modal() {
   const [open, setOpen] = useState(false);
   const [selectedColor, setSelectedColor] = useState(temp.colors[0]);
   const [selectedSize, setSelectedSize] = useState(temp.sizes[2]);
+
+  const router = useRouter();
+  const { state, dispatch } = useContext(Store);
 
   return (
     <Transition.Root show={open} as={Fragment}>
