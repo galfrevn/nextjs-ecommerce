@@ -377,7 +377,7 @@ function Navbar({ items }) {
 
         <nav
           aria-label="Top"
-          className="max-w-full mx-auto px-4 sm:px-6 lg:px-8 sticky top-0"
+          className="max-w-7xl mx-auto sticky px-2 md:px-2.5 lg:px-7 top-0"
         >
           <div className="border-b border-gray-200">
             <div className="h-16 flex items-center">

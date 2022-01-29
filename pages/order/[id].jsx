@@ -163,7 +163,7 @@ function Order({ params }) {
           <Skeleton count={5} />
         </div>
       ) : (
-        <div className="2xl:container 2xl:mx-auto py-14 mb-10 px-4 md:px-6 xl:px-20">
+        <div className="max-w-6xl mx-auto py-14 mb-10 ">
           <div className="flex flex-col xl:flex-row justify-center items-center space-y-10 xl:space-y-0 xl:space-x-8">
             {/* Image */}
             <div className="w-fulllg:w-9/12 xl:w-full">
