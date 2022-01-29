@@ -164,9 +164,9 @@ function Order({ params }) {
         </div>
       ) : (
         <div className="max-w-6xl mx-auto py-14 mb-10 ">
-          <div className="flex flex-col xl:flex-row justify-center items-center space-y-10 xl:space-y-0 xl:space-x-8">
+          <div className="flex flex-col xl:flex-row justify-start items-start space-y-10 xl:space-y-0 xl:space-x-8">
             {/* Image */}
-            <div className="w-fulllg:w-9/12 xl:w-full">
+            <div className="w-full ">
               <img
                 className="w-full hidden xl:block"
                 src="https://images.unsplash.com/photo-1601985705806-5b9a71f6004f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
