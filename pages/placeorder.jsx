@@ -21,17 +21,18 @@ function PlaceOrder() {
     userInfo,
     cart: { cartItems, shippingAddress },
   } = state;
-  const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
-  const itemsPrice = round2(
-    cartItems.reduce((a, c) => a + c.price * c.quantity, 0)
-  );
-  const totalPrice = round2(itemsPrice);
 
   useEffect(() => {
     if (cartItems == 0) {
       router.push("/");
     }
   }, []);
+
+  const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
+  const itemsPrice = round2(
+    cartItems.reduce((a, c) => a + c.price * c.quantity, 0)
+  );
+  const totalPrice = round2(itemsPrice);
 
   const placeOrderHandler = async () => {
     const toastId = toast.loading("Procesing your order");
