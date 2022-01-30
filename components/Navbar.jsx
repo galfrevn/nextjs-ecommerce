@@ -9,7 +9,6 @@ import {
 } from "@heroicons/react/outline";
 import Link from "next/link";
 import { Store } from "../utils/Store";
-import dynamic from "next/dynamic";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
@@ -148,7 +147,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function Navbar({ items }) {
+export default function Navbar({ items }) {
   const [open, setOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
 
@@ -692,4 +691,3 @@ function Navbar({ items }) {
   );
 }
 
-export default dynamic(() => Promise.resolve(Navbar), { ssr: false });

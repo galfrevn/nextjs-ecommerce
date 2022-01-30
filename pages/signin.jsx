@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { Store } from "../utils/Store";
 import toast, { Toaster } from "react-hot-toast";
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 export default function Example() {
   // React Hooks

@@ -1,7 +1,6 @@
 import React, { useEffect, useContext, useReducer } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import { getError } from "../utils/error";
 import { Store } from "../utils/Store";
 import Layout from "../components/Layout";
@@ -10,6 +9,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import Image from "next/image";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -24,20 +24,7 @@ function reducer(state, action) {
   }
 }
 
-const people = [
-  {
-    name: "Jane Cooper",
-    title: "Regional Paradigm Technician",
-    department: "Optimization",
-    role: "Admin",
-    email: "jane.cooper@example.com",
-    image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-  },
-  // More people...
-];
-
-function Profile() {
+export default function Profile() {
   const { state } = useContext(Store);
   const router = useRouter();
   const { userInfo } = state;
@@ -85,22 +72,38 @@ function Profile() {
         <div className="max-w-6xl mx-auto py-14 mb-10 ">
           <div className="flex flex-col xl:flex-row justify-start items-start xl:space-y-0 xl:space-x-8">
             {/* Image */}
-            <div className="w-full xl:h-screen mb-5 ">
-              <img
-                className="w-full object-cover h-full hidden xl:block"
-                src="https://images.unsplash.com/photo-1601985705806-5b9a71f6004f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-                alt="wardrobe "
-              />
-              <img
-                className="w-full hidden md:block xl:hidden"
-                src="https://images.unsplash.com/photo-1477554193778-9562c28588c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-                alt="wardrobe "
-              />
-              <img
-                className="w-screen md:hidden"
-                src="https://images.unsplash.com/photo-1521334884684-d80222895322?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-                alt="wardrobe "
-              />
+            <div className="w-full ">
+              <div className="w-full hidden xl:block">
+                <Image
+                  layout="responsive"
+                  width="100%"
+                  height="200"
+                  className="object-cover"
+                  src="https://images.unsplash.com/photo-1601985705806-5b9a71f6004f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+                  alt="wardrobe "
+                />
+              </div>
+              <div className="w-full hidden md:block xl:hidden">
+                <Image
+                  layout="responsive"
+                  height="40%"
+                  width="100%"
+                  className="object-cover"
+                  src="https://images.unsplash.com/photo-1477554193778-9562c28588c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+                  alt="wardrobe "
+                />
+              </div>
+
+              <div className="full md:hidden">
+                <Image
+                  layout="responsive"
+                  height="60%"
+                  width="100%"
+                  className="object-cover"
+                  src="https://images.unsplash.com/photo-1521334884684-d80222895322?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+                  alt="wardrobe "
+                />
+              </div>
             </div>
 
             {/* Right */}
@@ -124,7 +127,10 @@ function Profile() {
                   >
                     <div className="md:w-24 w-36 grid grid-cols-2 grid-rows-2 gap-1 bg-gray-50">
                       {item.orderItems.map((img) => (
-                        <img
+                        <Image
+                          layout="responsive"
+                          width="100%"
+                          height="100%"
                           key={img.name}
                           className="rounded-md  md:block"
                           src={img.image1}
@@ -172,4 +178,3 @@ function Profile() {
   );
 }
 
-export default dynamic(() => Promise.resolve(Profile), { ssr: false });

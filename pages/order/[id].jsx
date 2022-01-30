@@ -1,19 +1,18 @@
-import React, { useContext, useEffect, useReducer, useState } from "react";
-import dynamic from "next/dynamic";
+// React
+import React, { useContext, useEffect, useReducer } from "react";
+import Image from "next/image";
 import Layout from "../../components/Layout";
-import { Store } from "../../utils/Store";
-import Link from "next/link";
 import axios from "axios";
+import { Store } from "../../utils/Store";
 import { useRouter } from "next/router";
-import Heading from "../../components/Heading";
 import { getError } from "../../utils/error";
-import Cookies from "js-cookie";
 import toast, { Toaster } from "react-hot-toast";
-import { BadgeCheckIcon } from "@heroicons/react/outline";
 
+// Loading
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
+// Paypal
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 
 function reducer(state, action) {
@@ -37,7 +36,7 @@ function reducer(state, action) {
   }
 }
 
-function Order({ params }) {
+export default function Order({ params }) {
   const orderId = params.id;
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
   const router = useRouter();
@@ -167,21 +166,37 @@ function Order({ params }) {
           <div className="flex flex-col xl:flex-row justify-start items-start space-y-10 xl:space-y-0 xl:space-x-8">
             {/* Image */}
             <div className="w-full ">
-              <img
-                className="w-full hidden xl:block"
-                src="https://images.unsplash.com/photo-1601985705806-5b9a71f6004f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
-                alt="wardrobe "
-              />
-              <img
-                className="w-full hidden md:block xl:hidden"
-                src="https://images.unsplash.com/photo-1477554193778-9562c28588c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-                alt="wardrobe "
-              />
-              <img
-                className="w-screen md:hidden"
-                src="https://images.unsplash.com/photo-1521334884684-d80222895322?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-                alt="wardrobe "
-              />
+              <div className="w-full hidden xl:block">
+                <Image
+                  layout="responsive"
+                  width="100%"
+                  height="200"
+                  className="object-cover"
+                  src="https://images.unsplash.com/photo-1601985705806-5b9a71f6004f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+                  alt="wardrobe "
+                />
+              </div>
+              <div className="w-full hidden md:block xl:hidden">
+                <Image
+                  layout="responsive"
+                  height="40%"
+                  width="100%"
+                  className="object-cover"
+                  src="https://images.unsplash.com/photo-1477554193778-9562c28588c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+                  alt="wardrobe "
+                />
+              </div>
+
+              <div className="full md:hidden">
+                <Image
+                  layout="responsive"
+                  height="60%"
+                  width="100%"
+                  className="object-cover"
+                  src="https://images.unsplash.com/photo-1521334884684-d80222895322?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+                  alt="wardrobe "
+                />
+              </div>
             </div>
 
             {/* Right */}
@@ -215,8 +230,11 @@ function Order({ params }) {
                     className="flex md:flex-row justify-start items-start md:items-center w-full"
                   >
                     <div className="md:w-24 w-36">
-                      <img
-                        className="rounded-md  md:block"
+                      <Image
+                        layout="responsive"
+                        width="100%"
+                        height="100%"
+                        className="rounded-md md:block"
                         src={item.image1}
                         alt={item.name}
                       />
@@ -324,7 +342,9 @@ function Order({ params }) {
                       <div className="bg-indigo-500 p-3 w-full mt-3 text-white rounded-md">
                         The order has been payed
                       </div>
-                      <p className="text-xs mt-2">Your order will be sent as soon as posible</p>
+                      <p className="text-xs mt-2">
+                        Your order will be sent as soon as posible
+                      </p>
                     </div>
                   )}
                 </div>
@@ -340,5 +360,3 @@ function Order({ params }) {
 export async function getServerSideProps({ params }) {
   return { props: { params } };
 }
-
-export default dynamic(() => Promise.resolve(Order), { ssr: false });

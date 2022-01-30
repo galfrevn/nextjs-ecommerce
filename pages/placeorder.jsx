@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import dynamic from "next/dynamic";
+import React, { useContext, useEffect } from "react";
 import Layout from "../components/Layout";
 import { Store } from "../utils/Store";
 import Link from "next/link";
@@ -10,11 +9,11 @@ import { getError } from "../utils/error";
 import Cookies from "js-cookie";
 import toast, { Toaster } from "react-hot-toast";
 
-import { BadgeCheckIcon } from "@heroicons/react/outline";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import Image from "next/image";
 
-function PlaceOrder() {
+export default function PlaceOrder() {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const {
@@ -98,11 +97,12 @@ function PlaceOrder() {
                           key={product.name.toLowerCase()}
                           className="py-4 flex "
                         >
-                          <div className="flex-shrink-0 w-24 h-24 rounded-md overflow-hidden">
-                            <img
+                          <div className="aspect-w-3 flex-shrink-0 w-24 h-24 rounded-md overflow-hidden">
+                            <Image
+                              layout="fill"
                               src={product.image1}
                               alt={product.name}
-                              className="w-full h-full object-center object-cover"
+                              className="object-center object-cover"
                             />
                           </div>
 
@@ -170,4 +170,3 @@ function PlaceOrder() {
   );
 }
 
-export default dynamic(() => Promise.resolve(PlaceOrder), { ssr: false });

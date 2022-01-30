@@ -1,8 +1,9 @@
 import Link from "next/link";
 import Layout from "../components/Layout";
-
+import Image from 'next/image'
 import db from '../utils/db';
 import Product from '../models/Product';
+
 
 export default function Home(props) {
   const { products } = props;
@@ -18,10 +19,11 @@ export default function Home(props) {
           <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
             {products.map((product) => (
               <div key={product.name} className="group relative">
-                <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-                  <img
+                <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 ">
+                  <Image
                     src={product.image1}
                     alt={product.name}
+                    layout="fill"
                     className="w-full h-full object-center object-cover lg:w-full lg:h-full"
                   />
                 </div>
