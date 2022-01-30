@@ -12,6 +12,7 @@ import toast, { Toaster } from "react-hot-toast";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 
 function PlaceOrder() {
   const router = useRouter();

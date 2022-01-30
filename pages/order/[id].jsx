@@ -14,6 +14,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 // Paypal
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import dynamic from "next/dynamic";
 
 function reducer(state, action) {
   switch (action.type) {
