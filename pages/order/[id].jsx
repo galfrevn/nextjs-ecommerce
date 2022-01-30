@@ -64,8 +64,6 @@ function Order({ params }) {
     deliveredAt,
   } = order;
 
-  console.log(isPaid);
-
   useEffect(() => {
     if (!userInfo) {
       return router.push("/login");
