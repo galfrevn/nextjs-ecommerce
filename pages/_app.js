@@ -2,9 +2,10 @@ import "../styles/globals.css";
 import "tailwindcss/tailwind.css";
 import { StoreProvider } from "../utils/Store";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { useEffect } from "react";
 
 function MyApp({ Component, pageProps }) {
-  useEffect(() => {
+  useEffect (() => {
     const jssStyles = document.querySelector('#jss-server-side');
     if (jssStyles) {
       jssStyles.parentElement.removeChild(jssStyles);
