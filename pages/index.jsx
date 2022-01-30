@@ -4,7 +4,6 @@ import Image from 'next/image'
 import db from '../utils/db';
 import Product from '../models/Product';
 
-
 export default function Home(props) {
   const { products } = props;
 

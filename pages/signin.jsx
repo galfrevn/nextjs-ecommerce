@@ -8,7 +8,8 @@ import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { Store } from "../utils/Store";
 import toast, { Toaster } from "react-hot-toast";
-import { useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
+import Image from "next/image";
 
 export default function Example() {
   // React Hooks
@@ -27,13 +28,12 @@ export default function Example() {
     if (userInfo) {
       router.push("/");
     }
-  }, []);
+  }, [router, userInfo]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const submitHandler = async (e) => {
-   
     const toastId = toast.loading("Loging in");
     try {
       const { data } = await axios.post("/api/users/login", {
@@ -47,15 +47,17 @@ export default function Example() {
         id: toastId,
       });
     } catch (err) {
-      toast.error(`${err.response.data ? err.response.data.message : err.message}`, {
-        id: toastId,
-      });
+      toast.error(
+        `${err.response.data ? err.response.data.message : err.message}`,
+        {
+          id: toastId,
+        }
+      );
     }
   };
 
   return (
     <Layout>
-      
       <Toaster
         toastOptions={{
           className: "text-xs",
@@ -65,11 +67,15 @@ export default function Example() {
       <div className="h-[40rem] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
-            <img
-              className="mx-auto h-12 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-              alt="Workflow"
-            />
+            <div className="w-12 mx-auto">
+              <Image
+                layout="responsive"
+                width="100%"
+                height="100%"
+                src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                alt="Workflow"
+              />
+            </div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
               Sign in to your account
             </h2>
@@ -82,7 +88,10 @@ export default function Example() {
               </Link>
             </p>
           </div>
-          <form className="mt-8 space-y-6" onSubmit={handleSubmit(submitHandler)}>
+          <form
+            className="mt-8 space-y-6"
+            onSubmit={handleSubmit(submitHandler)}
+          >
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
               <div>

@@ -13,7 +13,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Image from "next/image";
 
-export default function PlaceOrder() {
+function PlaceOrder() {
   const router = useRouter();
   const { state, dispatch } = useContext(Store);
   const {
@@ -25,7 +25,7 @@ export default function PlaceOrder() {
     if (cartItems == 0) {
       router.push("/");
     }
-  }, []);
+  }, [cartItems, router]);
 
   const round2 = (num) => Math.round(num * 100 + Number.EPSILON) / 100;
   const itemsPrice = round2(
@@ -170,3 +170,4 @@ export default function PlaceOrder() {
   );
 }
 
+export default dynamic(() => Promise.resolve(PlaceOrder), { ssr: false });

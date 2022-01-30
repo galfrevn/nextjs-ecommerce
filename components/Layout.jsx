@@ -5,7 +5,7 @@ import Navbar from './Navbar'
 import { Store } from '../utils/Store';
 
 export default function Layout({ title, description, children }) {
-  const { state, dispatch } = useContext(Store);
+  const { state } = useContext(Store);
   const { cart } = state
   
   return (

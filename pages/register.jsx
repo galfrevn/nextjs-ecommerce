@@ -8,6 +8,7 @@ import Link from "next/link";
 import { LockClosedIcon } from "@heroicons/react/solid";
 import Layout from "../components/Layout";
 import toast, { Toaster } from "react-hot-toast";
+import Image from "next/image";
 
 export default function Register() {
   const router = useRouter();
@@ -19,7 +20,7 @@ export default function Register() {
     if (userInfo) {
       router.push("/");
     }
-  }, []);
+  }, [router, userInfo]);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -28,18 +29,18 @@ export default function Register() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    
+
     if (password !== confirmPassword) {
-      toast.error("Passwords don't match")
+      toast.error("Passwords don't match");
       return;
     }
-    if (password.length < 8 ) {
-      toast.error("Password is too short (7 or more character required)")
+    if (password.length < 8) {
+      toast.error("Password is too short (7 or more character required)");
       return;
     }
-    if (name.length < 6 ) {
+    if (name.length < 6) {
       toast.error("Please, provide your Full Name");
-      return
+      return;
     }
 
     const toastId = toast.loading("Creating user");
@@ -56,15 +57,17 @@ export default function Register() {
         id: toastId,
       });
     } catch (err) {
-      toast.error(`${err.response.data ? err.response.data.message : err.message}`, {
-        id: toastId,
-      });
+      toast.error(
+        `${err.response.data ? err.response.data.message : err.message}`,
+        {
+          id: toastId,
+        }
+      );
     }
   };
 
   return (
     <Layout>
-
       <Toaster
         toastOptions={{
           className: "text-xs",
@@ -73,12 +76,17 @@ export default function Register() {
 
       <div className="h-[40rem] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
-          <div>
-            <img
-              className="mx-auto h-12 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-              alt="Workflow"
-            />
+          <div className="flex flex-col">
+            <div className="w-12 mx-auto">
+              <Image
+                layout="responsive"
+                width="100%"
+                height="100%"
+                src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
+                alt="Workflow"
+              />
+            </div>
+
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
               Create your account
             </h2>

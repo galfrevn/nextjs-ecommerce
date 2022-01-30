@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/link-passhref */
+/* eslint-disable @next/next/no-img-element */
 import React, { useContext } from "react";
 import { Fragment, useState } from "react";
 import { Dialog, Popover, Tab, Transition } from "@headlessui/react";
@@ -12,6 +14,7 @@ import { Store } from "../utils/Store";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Cookies from "js-cookie";
+import Image from "next/image";
 
 const navigation = {
   categories: [
@@ -257,8 +260,11 @@ export default function Navbar({ items }) {
                             key={item.name}
                             className="group relative text-sm"
                           >
-                            <div className="aspect-w-1 aspect-h-1 rounded-lg bg-gray-100 overflow-hidden group-hover:opacity-75">
-                              <img
+                            <div className="aspect-w-1 rounded-lg bg-gray-100 overflow-hidden group-hover:opacity-75">
+                              <Image
+                                layout="responsive"
+                                width="100%"
+                                height="100%"
                                 src={item.imageSrc}
                                 alt={item.imageAlt}
                                 className="object-center object-cover"
@@ -352,11 +358,15 @@ export default function Navbar({ items }) {
 
               <div className="border-t border-gray-200 py-6 px-4">
                 <a href="#" className="-m-2 p-2 flex items-center">
-                  <img
-                    src="https://tailwindui.com/img/flags/flag-canada.svg"
-                    alt=""
-                    className="w-5 h-auto block flex-shrink-0"
-                  />
+                  <div className="w-5 h-auto block flex-shrink-0">
+                    <Image
+                      src="https://tailwindui.com/img/flags/flag-canada.svg"
+                      alt=""
+                      layout="responsive"
+                      width="100%"
+                      height="100%"
+                    />
+                  </div>
                   <span className="ml-3 block text-base font-medium text-gray-900">
                     CAD
                   </span>
@@ -651,9 +661,7 @@ export default function Navbar({ items }) {
                       </p>
                       <div className="mt-6">
                         {cartItems == 0 ? (
-                          <a
-                            className="cursor-not-allowed flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-gray-500 bg-gray-200"
-                          >
+                          <a className="cursor-not-allowed flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-gray-500 bg-gray-200">
                             Checkout
                           </a>
                         ) : (
@@ -690,4 +698,3 @@ export default function Navbar({ items }) {
     </div>
   );
 }
-

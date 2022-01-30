@@ -1,10 +1,8 @@
+/* eslint-disable @next/next/link-passhref */
 import { Fragment, useContext } from "react";
 import {
   CalendarIcon,
-  CheckIcon,
   ChevronDownIcon,
-  CurrencyDollarIcon,
-  LinkIcon,
   LocationMarkerIcon,
   PencilIcon,
 } from "@heroicons/react/solid";

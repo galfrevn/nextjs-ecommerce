@@ -36,13 +36,13 @@ export default function Shipping() {
       setValue("country", shippingAddress.country);
       setValue("payment", shippingAddress.payment);
     }
-  }, []);
+  }, [router, setValue, shippingAddress.address, shippingAddress.city, shippingAddress.country, shippingAddress.payment, shippingAddress.postalCode, shippingAddress.state, userInfo]);
 
   useEffect(() => {
     if (cartItems == 0) {
       router.push("/");
     }
-  }, [cartItems])
+  }, [cartItems, router])
 
   const handleRadio = (e) => {
     const paymentMethod = e.target.value;

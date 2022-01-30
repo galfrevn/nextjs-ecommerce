@@ -1,9 +1,11 @@
+/* eslint-disable @next/next/link-passhref */
 import React, { useEffect, useContext, useReducer } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { getError } from "../utils/error";
 import { Store } from "../utils/Store";
 import Layout from "../components/Layout";
+import dynamic from 'next/dynamic'
 
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -24,7 +26,7 @@ function reducer(state, action) {
   }
 }
 
-export default function Profile() {
+function Profile() {
   const { state } = useContext(Store);
   const router = useRouter();
   const { userInfo } = state;
@@ -54,7 +56,7 @@ export default function Profile() {
       }
     };
     fetchOrders();
-  }, []);
+  }, [router, userInfo]);
 
   return (
     <Layout>
@@ -178,3 +180,4 @@ export default function Profile() {
   );
 }
 
+export default dynamic(() => Promise.resolve(Profile), { ssr: false });

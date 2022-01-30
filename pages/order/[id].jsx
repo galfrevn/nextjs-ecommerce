@@ -36,7 +36,7 @@ function reducer(state, action) {
   }
 }
 
-export default function Order({ params }) {
+function Order({ params }) {
   const orderId = params.id;
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
   const router = useRouter();
@@ -101,6 +101,7 @@ export default function Order({ params }) {
       };
       loadPaypalScript();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order, successPay]);
 
   function createOrder(data, actions) {
@@ -360,3 +361,5 @@ export default function Order({ params }) {
 export async function getServerSideProps({ params }) {
   return { props: { params } };
 }
+
+export default dynamic(() => Promise.resolve(Order), { ssr: false });
